@@ -3,14 +3,14 @@
 <resources>
     <!-- Please refer to https://azure.microsoft.com/en-us/services/cognitive-services/face/ to get your subscription key -->
     <!-- If you have subscription key with its corresponding endpoint, you can add them here to use the service -->
-    <string name="subscription_key">6afc467f78e240288b5a3bc20f509fc5</string>
-    <string name="endpoint">https://southeastasia.api.cognitive.microsoft.com/face/v1.0</string>
+    <string name="subscription_key">844472f72b904efc91dd6b2c663a1296</string>
+    <string name="endpoint">https://westcentralus.api.cognitive.microsoft.com/face/v1.0</string>
 
     <!-- Main activity -->
     <string name="detection">Detection</string>
-    <string name="face_verification">Face to Face Verification</string>
+    <string name="face_verification">ยืนยันด้วยใบหน้า</string>
     <string name="person_verification">Face to Person Verification</string>
-    <string name="verification">Verification</string>
+    <string name="verification">ลืมรหัสผ่าน</string>
     <string name="identification">Identification</string>
     <string name="grouping">Grouping</string>
     <string name="find_similar_faces">Find Similar Faces</string>
@@ -21,7 +21,7 @@
     <string name="identification_description">Identify the person from a face.</string>
 
     <!-- Tips to get subscription key shown on main activity-->
-    <string name="app_name">Microsoft Cognitive Services Face</string>
+    <string name="app_name">Texi Beam</string>
     <string name="add_subscription_key_tip_title">Subscription Key is Needed</string>
     <string name="add_subscription_key_tip">Please put your subscription key with its corresponding endpoint to source file \"app/res/values/strings.xml\" to enable Face API calls.</string>
 

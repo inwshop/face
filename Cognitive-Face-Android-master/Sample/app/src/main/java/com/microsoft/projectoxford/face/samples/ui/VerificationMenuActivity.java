@@ -57,10 +57,4 @@ public class VerificationMenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //face to face verification button click
-    public void facePersonVerification(View view)
-    {
-        Intent intent = new Intent(this, PersonVerificationActivity.class);
-        startActivity(intent);
-    }
 }

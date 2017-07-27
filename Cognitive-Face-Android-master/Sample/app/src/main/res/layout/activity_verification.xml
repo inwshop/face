@@ -18,58 +18,40 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginBottom="@dimen/view_margin">
+            android:layout_marginBottom="@dimen/view_margin"
+            android:layout_weight="1">
 
             <RelativeLayout
-                android:id="@+id/image_control_0"
-                android:layout_width="100dp"
+                android:id="@+id/image_control_1"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_marginRight="@dimen/view_margin"
-                android:layout_marginEnd="@dimen/view_margin" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/face_0" />
-
-                <Button
-                    android:id="@+id/select_image_0"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/select_image"
-                    android:onClick="selectImage0"
-                    style="@style/ButtonStyle" />
+                android:layout_marginEnd="@dimen/view_margin"
+                android:layout_marginRight="@dimen/view_margin">
 
             </RelativeLayout>
 
             <ListView
-                android:id="@+id/list_faces_0"
-                android:layout_width="64dp"
+                android:id="@+id/list_faces_1"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:background="#E0E0E0"
-                android:verticalSpacing="@dimen/view_margin" />
+                android:verticalSpacing="@dimen/view_margin"
+                android:visibility="invisible" />
 
             <ImageView
-                android:id="@+id/image_0"
+                android:id="@+id/image_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@id/image_control_0"
-                android:layout_toEndOf="@id/image_control_0"
-                android:layout_toLeftOf="@id/list_faces_0"
-                android:layout_toStartOf="@id/list_faces_0"
-                android:layout_marginRight="@dimen/view_margin"
                 android:layout_marginEnd="@dimen/view_margin"
+                android:layout_marginRight="@dimen/view_margin"
+                android:layout_toEndOf="@id/image_control_1"
+                android:layout_toLeftOf="@id/list_faces_1"
+                android:layout_toRightOf="@id/image_control_1"
+                android:layout_toStartOf="@id/list_faces_1"
                 android:background="#E0E0E0"
-                android:contentDescription="@string/face_0" />
+                android:contentDescription="@string/face_1" />
 
         </RelativeLayout>
 
@@ -80,54 +62,37 @@
             android:layout_marginBottom="@dimen/view_margin">
 
             <RelativeLayout
-                android:id="@+id/image_control_1"
+                android:id="@+id/image_control_0"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/view_margin"
                 android:layout_marginEnd="@dimen/view_margin" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/face_1" />
-
-                <Button
-                    android:id="@+id/select_image_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:text="@string/select_image"
-                    android:onClick="selectImage1"
-                    style="@style/ButtonStyle" />
-
             </RelativeLayout>
 
             <ListView
-                android:id="@+id/list_faces_1"
+                android:id="@+id/list_faces_0"
                 android:layout_width="64dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:background="#E0E0E0"
-                android:verticalSpacing="@dimen/view_margin" />
+                android:verticalSpacing="@dimen/view_margin"
+                android:visibility="invisible" />
 
             <ImageView
-                android:id="@+id/image_1"
+                android:id="@+id/image_0"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@id/image_control_1"
-                android:layout_toEndOf="@id/image_control_1"
-                android:layout_toLeftOf="@id/list_faces_1"
-                android:layout_toStartOf="@id/list_faces_1"
-                android:layout_marginRight="@dimen/view_margin"
                 android:layout_marginEnd="@dimen/view_margin"
+                android:layout_marginRight="@dimen/view_margin"
+                android:layout_toEndOf="@id/image_control_0"
+                android:layout_toLeftOf="@id/list_faces_0"
+                android:layout_toRightOf="@id/image_control_0"
+                android:layout_toStartOf="@id/list_faces_0"
                 android:background="#E0E0E0"
-                android:contentDescription="@string/face_1" />
+                android:contentDescription="@string/face_0"
+                android:visibility="invisible" />
 
         </RelativeLayout>
 
@@ -138,7 +103,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_above="@id/button_bar"
+        android:layout_above="@+id/button_bar"
         android:layout_gravity="center" />
 
     <LinearLayout
@@ -149,23 +114,25 @@
         android:orientation="horizontal" >
 
         <Button
+            android:id="@+id/select_image_1"
+            style="@style/ButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/view_margin"
+            android:layout_marginEnd="@dimen/view_margin"
+            android:onClick="selectImage1"
+            android:text="เลือกรูป" />
+
+        <Button
             android:id="@+id/verify"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginRight="@dimen/view_margin"
             android:layout_marginEnd="@dimen/view_margin"
-            android:text="@string/verify"
+            android:text="ยืนยัน"
             android:onClick="verify"
-            style="@style/ButtonStyle" />
-
-        <Button
-            android:id="@id/view_log"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/view_log"
-            android:onClick="viewLog"
             style="@style/ButtonStyle" />
 
     </LinearLayout>

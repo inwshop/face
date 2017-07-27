@@ -33,11 +33,16 @@
 package com.microsoft.projectoxford.face.samples.ui;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +54,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.contract.Face;
 import com.microsoft.projectoxford.face.contract.VerifyResult;
@@ -56,10 +63,12 @@ import com.microsoft.projectoxford.face.samples.R;
 import com.microsoft.projectoxford.face.samples.helper.ImageHelper;
 import com.microsoft.projectoxford.face.samples.helper.LogHelper;
 import com.microsoft.projectoxford.face.samples.helper.SampleApp;
+
 import com.microsoft.projectoxford.face.samples.log.VerificationLogActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
@@ -138,7 +147,7 @@ public class FaceVerificationActivity extends AppCompatActivity {
             // Get an instance of face service client to detect faces in image.
             FaceServiceClient faceServiceClient = SampleApp.getFaceServiceClient();
             try{
-                publishProgress("Detecting...");
+                publishProgress("รอสักครู่...");
 
                 // Start detection.
                 return faceServiceClient.detect(
@@ -179,7 +188,7 @@ public class FaceVerificationActivity extends AppCompatActivity {
     private static final int REQUEST_SELECT_IMAGE_0 = 0;
     private static final int REQUEST_SELECT_IMAGE_1 = 1;
 
-
+    private Uri mUriPhotoTaken;
     // The IDs of the two faces to be verified.
     private UUID mFaceId0;
     private UUID mFaceId1;
@@ -211,10 +220,17 @@ public class FaceVerificationActivity extends AppCompatActivity {
         clearDetectedFaces(0);
         clearDetectedFaces(1);
 
+        inputBitmap0();  //ดึงภาพต้นฉบับ
+
+
+
+
         // Disable button "verify" as the two face IDs to verify are not ready.
         setVerifyButtonEnabledStatus(false);
 
         LogHelper.clearVerificationLog();
+        
+
     }
 
     // Called when image selection is done. Begin detecting if the image is selected successfully.
@@ -234,6 +250,7 @@ public class FaceVerificationActivity extends AppCompatActivity {
             // If image is selected successfully, set the image URI and bitmap.
             Bitmap bitmap = ImageHelper.loadSizeLimitedBitmapFromUri(
                     data.getData(), getContentResolver());
+            //Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.image);
             if (bitmap != null) {
                 // Image is select but not detected, disable verification button.
                 setVerifyButtonEnabledStatus(false);
@@ -258,6 +275,17 @@ public class FaceVerificationActivity extends AppCompatActivity {
         }
     }
 
+    private void inputBitmap0(){
+        int index = 0;
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.image2);
+                    mBitmap0 = bm;
+                    mFaceId0 = null;
+                // Start detecting in image.
+                detect(bm, index);
+            }
+
+
+
     // Clear the detected faces indicated by index.
     private void clearDetectedFaces(int index) {
         ListView faceList = (ListView) findViewById(
@@ -270,59 +298,66 @@ public class FaceVerificationActivity extends AppCompatActivity {
     }
 
     // Called when the "Select Image0" button is clicked in face face verification.
+/*
     public void selectImage0(View view) {
-        selectImage(0);
+        Intent intent = new Intent(this, SelectImageActivity.class);
+        startActivityForResult(intent, REQUEST_SELECT_IMAGE_0);
     }
+*/
 
     // Called when the "Select Image1" button is clicked in face face verification.
     public void selectImage1(View view) {
-        selectImage(1);
+        Intent intent = new Intent(this, SelectImageActivity.class);
+
+
+        startActivityForResult(intent, REQUEST_SELECT_IMAGE_1 );
     }
 
     // Called when the "Verify" button is clicked.
     public void verify(View view) {
         setAllButtonEnabledStatus(false);
+
         new VerificationTask(mFaceId0, mFaceId1).execute();
     }
 
-    // View the log of service calls.
+    /*// View the log of service calls.
     public void viewLog(View view) {
         Intent intent = new Intent(this, VerificationLogActivity.class);
         startActivity(intent);
-    }
+    }*/
 
-    // Select the image indicated by index.
-    private void selectImage(int index) {
-        Intent intent = new Intent(this, SelectImageActivity.class);
-        startActivityForResult(intent, index == 0 ? REQUEST_SELECT_IMAGE_0: REQUEST_SELECT_IMAGE_1 );
-    }
 
     // Set the select image button is enabled or not.
     private void setSelectImageButtonEnabledStatus(boolean isEnabled, int index) {
         Button button;
-
+/*
         if (index == 0) {
             button = (Button) findViewById(R.id.select_image_0);
         } else{
+            button = (Button) findViewById(R.id.select_image_1);
+        }*/
+        if (index == 1) {
+            button = (Button) findViewById(R.id.select_image_1);
+        }else {
             button = (Button) findViewById(R.id.select_image_1);
         }
 
         button.setEnabled(isEnabled);
 
-        Button viewLog = (Button) findViewById(R.id.view_log);
-        viewLog.setEnabled(isEnabled);
+       // Button viewLog = (Button) findViewById(R.id.view_log);
+        //viewLog.setEnabled(isEnabled);
     }
 
     // Set the verify button is enabled or not.
     private void setVerifyButtonEnabledStatus(boolean isEnabled) {
-            Button button = (Button) findViewById(R.id.verify);
-            button.setEnabled(isEnabled);
+        Button button = (Button) findViewById(R.id.verify);
+        button.setEnabled(isEnabled);
     }
 
     // Set all the buttons are enabled or not.
     private void setAllButtonEnabledStatus(boolean isEnabled) {
-        Button selectImage0 = (Button) findViewById(R.id.select_image_0);
-        selectImage0.setEnabled(isEnabled);
+       // Button selectImage0 = (Button) findViewById(R.id.select_image_0);
+       // selectImage0.setEnabled(isEnabled);
 
         Button selectImage1 = (Button) findViewById(R.id.select_image_1);
         selectImage1.setEnabled(isEnabled);
@@ -330,8 +365,8 @@ public class FaceVerificationActivity extends AppCompatActivity {
         Button verify = (Button) findViewById(R.id.verify);
         verify.setEnabled(isEnabled);
 
-        Button viewLog = (Button) findViewById(R.id.view_log);
-        viewLog.setEnabled(isEnabled);
+        //Button viewLog = (Button) findViewById(R.id.view_log);
+        //viewLog.setEnabled(isEnabled);
     }
 
     // Initialize the ListView which contains the thumbnails of the detected faces.
@@ -394,7 +429,8 @@ public class FaceVerificationActivity extends AppCompatActivity {
             addLog("Response: Success. Detected "
                     + result.length + " face(s) in image" + index);
 
-            setInfo(result.length + " face" + (result.length != 1 ? "s": "")  + " detected");
+           // setInfo(result.length + " face" + (result.length != 1 ? "s": "")  + " detected");
+            setInfo("");
 
             // Show the detailed list of detected faces.
             FaceListAdapter faceListAdapter = new FaceListAdapter(result, index);
@@ -439,6 +475,14 @@ public class FaceVerificationActivity extends AppCompatActivity {
         if (mFaceId0 != null && mFaceId1 != null) {
             setVerifyButtonEnabledStatus(true);
         }
+        ListView listView;
+        listView = (ListView) findViewById(R.id.list_faces_0);
+        listView.setVisibility(View.INVISIBLE);
+
+        ListView listView2;
+        listView2 = (ListView) findViewById(R.id.list_faces_1);
+        listView2.setVisibility(View.INVISIBLE);
+
     }
 
     // Start detecting in image specified by index.
